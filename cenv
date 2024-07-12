@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 DIR=/tmp
 MFPATH=$DIR/Makefile
