@@ -1,0 +1,48 @@
+#!/bin/env bash
+
+DIR=/tmp
+MFPATH=$DIR/Makefile
+SRCPATH=$DIR/prova.c
+
+new_makefile() {
+    MF=$(cat << EOF
+CC=gcc
+CFLAGS=-Wall
+a.out: prova.o
+	\$(CC) \$(CFLAGS) prova.c -o a.out
+.INTERMEDIATE: prova.o
+run: a.out
+	./a.out
+clean:
+	rm prova.o a.out
+EOF
+    )
+
+    echo "$MF" > $MFPATH
+}
+
+new_src() {
+    SRC=$(cat << EOF
+#include <stdio.h>
+
+int main()
+{
+    printf("Hello, World!\\\\n");
+    return 0;
+}
+EOF
+    )
+
+    echo "$SRC" > $SRCPATH
+}
+
+run_editor() {
+    [ -n ${EDITOR:-vi} ] && ${EDITOR:-vi} $SRCPATH || vim $SRCPATH
+}
+
+cd $DIR
+
+[ ! -f $MFPATH ] || [ "$1" == "new" ] && new_makefile
+[ ! -f $SRCPATH ] || [ "$1" == "new" ] && new_src
+
+run_editor
