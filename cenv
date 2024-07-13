@@ -7,7 +7,7 @@ SRCPATH=$DIR/prova.c
 new_makefile() {
     MF=$(cat << EOF
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=
 a.out: prova.o
 	\$(CC) \$(CFLAGS) prova.c -o a.out
 .INTERMEDIATE: prova.o
